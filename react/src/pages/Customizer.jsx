@@ -30,7 +30,11 @@ const Customizer = () => {
             <div className="flex items-center min-h-screen">
               <div className="editortabs-container tabs ">
                 {EditorTabs.map((tab) => (
-                  <Tab key={tab.name} tab={tab} handleClick={() => {}} />
+                  <Tab
+                    key={tab.name}
+                    tab={tab}
+                    handleClick={() => console.log(`Clicked: ${tab.name}`)}
+                  />
                 ))}
               </div>
             </div>
@@ -58,7 +62,7 @@ const Customizer = () => {
                 tab={tab}
                 isFilerTab
                 isActiveTab=""
-                handleClick={() => {}}
+                handleClick={() => console.log(`Clicked: ${tab.name}`)}
               />
             ))}
           </motion.div>
