@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import config from "../config/config";
 import state from "../store/index";
-import { download } from "../assets";
+import { download, logoShirt, stylishShirt } from "../assets";
 import { downloadCanvasToImage, reader } from "../config/helpers";
 import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
 import { fadeAnimation, slideAnimation } from "../config/motion";
@@ -15,9 +15,36 @@ import {
   CustomButton,
 } from "../components";
 import { useSnapshot } from "valtio";
+import { use } from "react";
+import Colorpicker from "../components/Colorpicker";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
+
+  const [file, setFile] = useState("");
+
+  const [prompt, setPrompt] = useState("");
+  const [generatingImg, setGeneratingImg] = useState(false);
+
+  const [activeEditorTab, setActiveEditorTab] = useState("");
+  const [activeFilterTab, setActiveFilterTab] = useState({
+    logoShirt: true,
+    stylishShirt: false,
+  });
+
+  const generateTabContent = () => {
+    switch (activeEditorTab) {
+      case "colorpicker":
+        return <Colorpicker />;
+      case "filepicker":
+        return <FilePicker />;
+      case "aipicker":
+        return <AIPicker />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -61,7 +88,7 @@ const Customizer = () => {
                 key={tab.name}
                 tab={tab}
                 isFilerTab
-                isActiveTab=""
+                isActiveTab
                 handleClick={() => console.log(`Clicked: ${tab.name}`)}
               />
             ))}
